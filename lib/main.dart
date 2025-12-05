@@ -1,38 +1,30 @@
 import 'package:flutter/material.dart';
 import './botoes.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: const Home());
-  }
+@override
+Widget build(BuildContext context) {
+  return MaterialApp(home: Home());
 }
 
 class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
-  State<Home> createState() => HomeState();
+  HomeState createState() => HomeState();
 }
 
 class HomeState extends State<Home> {
-  final List<Map<String, Object>> perguntas = [
+  final perguntas = [
     {
-      'texto': 'Qual a sua cor favorita?',
+      'perguntas': 'Qual a sua cor favorita?',
       'respostas': ['Azul', 'Vermelho', 'Verde', 'Branco'],
     },
     {
-      'texto': 'Qual é o seu time?',
+      'perguntas': 'Qual é o seu time?',
       'respostas': ['Barcelona', 'Real Madrid', 'Bayern', 'Manchester City'],
     },
     {
-      'texto': 'Qual seu animal favorito?',
+      'perguntas': 'Qual seu animal favorito?',
       'respostas': ['Cachorro', 'Gato', 'Papagaio', 'Tartaruga'],
     },
   ];
@@ -40,42 +32,36 @@ class HomeState extends State<Home> {
   var indicePergunta = 0;
 
   void responder() {
-    setState(() {
-      if (indicePergunta < perguntas.length - 1) {
-        indicePergunta++;
-      } else {
-        indicePergunta = 0;
-      }
-    });
+    if (indicePergunta < perguntas.length - 1) {
+      indicePergunta++;
+    } else {
+      indicePergunta = 0;
+    }
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> respostas =
-        perguntas[indicePergunta]['respostas'] as List<String>;
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AlexTech', style: TextStyle(fontSize: 25)), //  nome
+        title: const Text('AlexTech', style: TextStyle(fontSize: 30)), //  nome
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 45, 12, 192),
+        backgroundColor: Colors.blue,
         toolbarHeight: 80,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(15),
         child: Column(
           children: [
             // Pergunta
             Text(
-              perguntas[indicePergunta]['texto'] as String,
-              style: const TextStyle(fontSize: 28),
-              textAlign: TextAlign.center,
+              perguntas[indicePergunta]['perguntas'].toString(),
+              style: TextStyle(fontSize: 25),
             ),
-            const SizedBox(height: 20),
-
-            ...respostas.map((t) {
-              return Botoes(texto: t, onPressed: responder);
-            }),
+            SizedBox(height: 20),
+            ...((perguntas[indicePergunta]['respostas'] as List<String>)
+                .map((textoBotao) => Botoes(resp: responder, text: textoBotao))
+                .toList()),
           ],
         ),
       ),

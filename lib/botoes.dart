@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 
 class Botoes extends StatelessWidget {
-  final String texto;
-  final void Function() onPressed;
+  const Botoes({required this.resp, required this.text, super.key});
 
-  const Botoes({required this.texto, required this.onPressed, super.key});
+  final void Function() resp;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.all(5),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blue,
-          foregroundColor: Colors.white,
+    return Padding(
+      padding: const EdgeInsets.all(2),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: resp,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+          ),
+          child: Text(text, style: TextStyle(fontSize: 20)),
         ),
-        onPressed: onPressed,
-        child: Text(texto),
       ),
     );
   }

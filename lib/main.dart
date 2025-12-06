@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import './botoes.dart';
 
-
+void main() {
+    runApp(const MyApp()); // Chama o widget MyApp
+}
 
 @override
 Widget build(BuildContext context) {

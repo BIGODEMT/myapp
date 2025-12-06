@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import './botoes.dart';
+import './dados.dart';
+import './lista_perguntas.dart';
+import './resposta.dart';
 
 void main() {
-    runApp(const MyApp()); // Chama o widget MyApp
+  runApp(const MyApp()); // Chama o widget MyApp
 }
 
-@override
-Widget build(BuildContext context) {
-  return MaterialApp(home: Home());
-}
 class MyApp extends StatelessWidget {
-    const MyApp({super.key}); // Adicione o construtor
+  const MyApp({super.key}); // Adicione o construtor
 
-    @override
-    Widget build(BuildContext context) {
-        return MaterialApp(
-            title: 'AlexTech', // Adicione um título para o MaterialApp
-            home: Home(), // A tela Home do seu quiz
-        );
-    }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'AlexTech', // Adicione um título para o MaterialApp
+      home: Home(), // A tela Home do seu quiz
+    );
+  }
 }
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -28,56 +28,48 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
-  final perguntas = [
-    {
-      'perguntas': 'Qual a sua cor favorita?',
-      'respostas': ['Azul', 'Vermelho', 'Verde', 'Branco'],
-    },
-    {
-      'perguntas': 'Qual é o seu time?',
-      'respostas': ['Barcelona', 'Real Madrid', 'Bayern', 'Manchester City'],
-    },
-    {
-      'perguntas': 'Qual seu animal favorito?',
-      'respostas': ['Cachorro', 'Gato', 'Papagaio', 'Tartaruga'],
-    },
-  ];
-
+  final dados = perguntasRespostas;
+  List respostas = [];
   var indicePergunta = 0;
 
-  void responder() {
-    if (indicePergunta < perguntas.length - 1) {
-      indicePergunta++;
-    } else {
-      indicePergunta = 0;
-    }
+  void responder(String r) {
+    String p = dados[indicePergunta].pergunta;
+    respostas.add({'pergunta': p, 'resposta': r});
+    indicePergunta++;
     setState(() {});
+  }
+
+  void reiniciar() {
+    setState(() {
+      indicePergunta = 0;
+      respostas = [];
+    });
+  }
+
+  bool get temPergunta {
+    return indicePergunta < dados.length;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AlexTech', style: TextStyle(fontSize: 30)), //  nome
+        title: const Text(
+          'Alex', 
+          style: TextStyle(fontSize: 30)), // Text
         centerTitle: true,
-        backgroundColor: Colors.blue,
+        backgroundColor: const Color.fromARGB(255, 29, 14, 196),
         toolbarHeight: 80,
-      ),
+      ), // AppBar
       body: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            // Pergunta
-            Text(
-              perguntas[indicePergunta]['perguntas'].toString(),
-              style: TextStyle(fontSize: 25),
-            ),
-            SizedBox(height: 20),
-            ...((perguntas[indicePergunta]['respostas'] as List<String>)
-                .map((textoBotao) => Botoes(resp: responder, text: textoBotao))
-                .toList()),
-          ],
-        ),
+        padding: const EdgeInsets.all(20),
+        child: temPergunta // OPERADOR TERNÁRIO
+            ? ListaPerguntas(
+                indicePergunta: indicePergunta,
+                perguntas: dados, // Passando 'dados' em vez de 'perguntas'
+                responder: responder,
+              ) // ListaPerguntas
+            : Resultado(respostas: respostas, reiniciar: reiniciar),
       ),
     );
   }

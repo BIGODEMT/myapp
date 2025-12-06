@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import './botoes.dart';
 
+
+
 @override
 Widget build(BuildContext context) {
   return MaterialApp(home: Home());
 }
+class MyApp extends StatelessWidget {
+    const MyApp({super.key}); // Adicione o construtor
 
+    @override
+    Widget build(BuildContext context) {
+        return MaterialApp(
+            title: 'AlexTech', // Adicione um título para o MaterialApp
+            home: Home(), // A tela Home do seu quiz
+        );
+    }
+}
 class Home extends StatefulWidget {
   const Home({super.key});
 

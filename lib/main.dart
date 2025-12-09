@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './botoes.dart';
 import './dados.dart';
 import './lista_perguntas.dart';
-import './resposta.dart';
+//import './resposta.dart';
 
 void main() {
   runApp(const MyApp()); // Chama o widget MyApp
@@ -69,7 +69,7 @@ class HomeState extends State<Home> {
                 perguntas: dados, // Passando 'dados' em vez de 'perguntas'
                 responder: responder,
               ) // ListaPerguntas
-            : Resultado(respostas: respostas, reiniciar: reiniciar),
+            : null // Resultado(respostas: respostas, reiniciar: reiniciar),
       ),
     );
   }

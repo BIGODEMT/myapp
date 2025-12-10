@@ -32,10 +32,18 @@ class HomeState extends State<Home> {
   final dados = perguntasRespostas;
   List respostas = [];
   var indicePergunta = 0;
+  var totalPontos = 0;
 
-  void responder(String r) {
+  @override
+  void iniState() {
+    super.initState();
+    perguntasRespostas.shuffle();
+  }
+
+  void responder(String r, int ponto) {
     String p = dados[indicePergunta].pergunta;
-    respostas.add({'pergunta': p, 'resposta': r});
+    respostas.add({'pergunta': p, 'resposta': r, 'ponto': ponto});
+    totalPontos += ponto;
     indicePergunta++;
     setState(() {});
   }
@@ -43,7 +51,9 @@ class HomeState extends State<Home> {
   void reiniciar() {
     setState(() {
       indicePergunta = 0;
+      totalPontos = 0;
       respostas = [];
+      perguntasRespostas.shuffle();
     });
   }
 
@@ -72,6 +82,7 @@ class HomeState extends State<Home> {
             : Resultado(
                 respostas,
                 reiniciar,
+                totalPontos
               ), // Resultado(respostas: respostas, reiniciar: reiniciar),
       ),
     );

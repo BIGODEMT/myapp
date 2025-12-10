@@ -5,7 +5,7 @@ import './botoes.dart';
 class ListaPerguntas extends StatelessWidget {
   final int indicePergunta;
   final List<PerguntaRespostas> perguntas;
-  final void Function(String) responder;
+  final void Function(String, int) responder;
 
   const ListaPerguntas({
     super.key,
@@ -19,15 +19,27 @@ class ListaPerguntas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final perguntaAtual = perguntas[indicePergunta];
+    perguntaAtual.respostas.shuffle();
     return Column(
       children: [
         Text(
-          perguntaAtual.pergunta, // Exibe o texto da pergunta
+          perguntaAtual.pergunta,
+          textAlign: TextAlign.center, // Exibe o texto da pergunta
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 20),
-        ...perguntaAtual.respostas
-            .map((textoBotao) => Botoes(resp: responder, text: textoBotao)), // Adiciona o .toList() para usar o operador spread (...)
+
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Image.asset(
+            'assets/images/${perguntaAtual.imagem}',
+            width: double.infinity,
+          ), // Image.asset
+        ),
+
+        ...perguntaAtual.respostas.map(
+          (resposta) =>
+              Botoes(resp: responder, text: resposta['r'], ponto: resposta['p']),
+        ), // Adiciona o .toList() para usar o operador spread (...)
       ],
     );
   }

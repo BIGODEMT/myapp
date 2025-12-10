@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import './itens.dart';
 
 class Resultado extends StatelessWidget {
@@ -23,32 +22,25 @@ class Resultado extends StatelessWidget {
             ),
           ),
 
-          ...respostas.map((resp) => Itens(
-            pergunta: resp['pergunta'],
-            resposta: resp['resposta'],
-            )
-        ),
+          ...respostas.map(
+            (resp) =>
+                Itens(pergunta: resp['pergunta'], resposta: resp['resposta']),
+          ),
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: reiniciar,
             style: ElevatedButton.styleFrom(
-            minimumSize: Size(
-            double.infinity, double.minPositive
-          ), // Size
-            padding: EdgeInsets.all(10),
-            backgroundColor: Colors.blue,
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.zero
-            ), // RoundedRectangleBorder
-          ), // ElevatedButton.styleFrom
-            child: Text(
-            'Reiniciar',
-          style: TextStyle(fontSize: 25),
-        
-            ),
+              minimumSize: Size(double.infinity, double.minPositive), // Size
+              padding: EdgeInsets.all(10),
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+              ), // RoundedRectangleBorder
+            ), // ElevatedButton.styleFrom
+            child: Text('Reiniciar', style: TextStyle(fontSize: 25)),
           ),
-        ], 
+        ],
       ),
     );
   }

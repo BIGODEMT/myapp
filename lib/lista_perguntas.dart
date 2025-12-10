@@ -27,8 +27,7 @@ class ListaPerguntas extends StatelessWidget {
         ),
         SizedBox(height: 20),
         ...perguntaAtual.respostas
-            .map((textoBotao) => Botoes(resp: responder, text: textoBotao))
-            .toList(), // Adiciona o .toList() para usar o operador spread (...)
+            .map((textoBotao) => Botoes(resp: responder, text: textoBotao)), // Adiciona o .toList() para usar o operador spread (...)
       ],
     );
   }

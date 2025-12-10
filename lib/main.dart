@@ -3,6 +3,7 @@ import './botoes.dart';
 import './dados.dart';
 import './lista_perguntas.dart';
 //import './resposta.dart';
+import './resultado.dart';
 
 void main() {
   runApp(const MyApp()); // Chama o widget MyApp
@@ -54,22 +55,24 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Alex', 
-          style: TextStyle(fontSize: 30)), // Text
+        title: const Text('Alex', style: TextStyle(fontSize: 30)), // Text
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 29, 14, 196),
         toolbarHeight: 80,
       ), // AppBar
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: temPergunta // OPERADOR TERNÁRIO
+        child:
+            temPergunta // OPERADOR TERNÁRIO
             ? ListaPerguntas(
                 indicePergunta: indicePergunta,
                 perguntas: dados, // Passando 'dados' em vez de 'perguntas'
                 responder: responder,
               ) // ListaPerguntas
-            : null // Resultado(respostas: respostas, reiniciar: reiniciar),
+            : Resultado(
+                respostas,
+                reiniciar,
+              ), // Resultado(respostas: respostas, reiniciar: reiniciar),
       ),
     );
   }
